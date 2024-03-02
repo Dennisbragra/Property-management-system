@@ -1,0 +1,109 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+
+{% if request.user.is_superuser %}
+    <div class="container-fluid">
+        <ul class="d-flex justify-content-end">
+            <div>
+                <li class="nav-item"><a href="{% url 'house_status' %}">Check unit status</a></li>
+                <li class="nav-item"><a href="{% url 'newunit' %}"> New unit</a></li>
+            </div>
+        </ul>
+    </div>
+        
+{% endif %}
+
+
+ <div class="container-fluid mt-lg-2">
+    <div class="d-md-flex">
+        <div class="col-2 pt-3">
+            <div><h3>Houses</h3></div>
+            {% for topic in topics %}
+                <div><a href="{% url 'catalogue' topic.id %}">{{ topic.name|title }}</a></div>
+            {% endfor %}       
+        </div>
+
+        <div class="col-7" style="margin-right: 50px;">
+            <div class="d-md-flex">
+                <div class="row">
+                    {% for house in houses %}
+                        {% if house.sold == False %}
+                            <div class="col-4">
+                                <ul>
+
+                                    <a href="{% url 'bookunit' house.id %}">
+                                        <li>A {{ house.bedroom}} bedroomed {{ house.name }}</li>
+                                        <img class="img-fluid" src="{{ house.image.url }}" style="width:250px;">
+                                    </a>    
+                                        <li>{{ house.description }}<br></li>
+                                        <li>Ksh. {{ house.price}}</li>
+                                        <li>Located at {{ house.place}}</li>
+                                        <li>
+                                            <small>Posted {{ house.created|timesince }} ago</small>
+                                        </li>
+                                        <li>
+                                            {% if house.booked == True %}
+                                                <small>Booked</small>
+                                            {% endif %} 
+                                        </li>
+                                </ul>
+                            </div>    
+                        {% endif %}                 
+                    {% endfor %}
+                </div>    
+            </div>    
+        </div>
+
+            <!-- <div class="col-7">
+                <div class="row">
+                {% for house in houses %}
+                    {% if house.sold == False %}
+                        <div class="col mb-2">
+                            <div class="card" style="width:360px;">
+                                <div class="card-body mb-2 pb-0">
+                                    <a href="{% url 'bookunit' house.id %}">
+                                        <div class="card-title">A {{ house.bedroom}} bedroomed {{ house.name }}</div>
+                                        <img class="img-fluid" src="{% static 'images/restate.jpg' %}">
+                                    </a>
+                                    <ul class="d-flex flex-column px-0">
+                                    <li>A {{ house.bedroom}} bedroomed {{ house.name }}</li>
+                                    <li>{{ house.description }}</li>
+                                    <li>Ksh. {{ house.price}}</li>
+                                    <li>Located at {{ house.place}}</li> 
+                                    </ul>    
+                                </div>
+                                <div class="card-footer pt-0">
+                                    <small>{% if house.booked %}<span>Booked</span>{% endif %}</small>
+                                    <small>{{ house.created|timesince }} ago</small>
+                                </div> 
+                            </div>  
+                        </div>            
+                    {% endif %}
+                {% endfor %}
+                </div>  
+            </div> -->
+            
+
+
+
+        <div class="col d-none d-lg-block">
+            <div class="card bg-secondary" >
+                <div class="card-body">
+                    <div class="card-title"><h5>New Properties</h5></div>
+                    
+                        
+                        {% for unit in units %}
+                            <a href="{% url 'bookunit' unit.id %}">
+                                <img class="img-fluid" src="{{ unit.image.url }}">
+                                A {{ unit.bedroom }} bedroomed {{ unit.name }} in {{ unit.place }}<br>
+                                for Ksh. {{ unit.price }}<br><br></a>
+                        {% endfor %}
+                                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+{% endblock content %}

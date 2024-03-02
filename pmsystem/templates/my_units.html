@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+	<h3>My booked units</h3>
+	
+	{% for unit in units %}
+		{% if unit.tenant == request.user %}
+			<img class="img-fluid" src="{{ unit.image.url }}" style="width:200px">
+			<li>A {{ unit.bedroom}} bedroomed {{ unit.name }}</li>
+			<li>{{ unit.description }}<br></li>
+       		<li>Ksh. {{ unit.price}}</li>
+           	<li>Located at {{ unit.place|title }}</li>
+        {% endif %}   	
+	{% endfor %}
+	<a href="{{ request.META.HTTP_REFERER}}">Go Back</a>
+	
+
+	
+
+{% endblock content %}

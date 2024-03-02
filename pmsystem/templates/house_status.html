@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+	<div class="container-fluid bg-secondary">
+		<div class="row mb-3">
+			<h3>This are the sold units</h3>
+			{% for sold_unit in sold_units %}
+				<img class="img-fluid" src="{{ sold_unit.image.url }}" style="width:200px">
+				<li>A {{ sold_unit.bedroom}} bedroomed {{ sold_unit.name }}</li>
+				<li>{{ sold_unit.description }}<br></li>
+       			<li>Ksh. {{ sold_unit.price}}</li>
+           		<li>Located at {{ sold_unit.place|title }}</li>
+			{% endfor %}			
+		</div>
+		<div class="row">
+			<h3>This are the houses that are booked</h3>
+			{% for booked_unit in booked_units %}
+			<div class="col">
+				<img class="img-fluid" src="{{ booked_unit.image.url }}" style="width:200px">
+				<li>A {{ booked_unit.bedroom}} bedroomed {{ booked_unit.name }}</li>
+				<li>{{ booked_unit.description }}<br></li>
+       			<li>Ksh. {{ booked_unit.price}}</li>
+           		<li>Located at {{ booked_unit.place|title }}</li><br><br>
+           	</div>	
+			{% endfor %}
+
+		</div>
+	</div>
+{% endblock content %}

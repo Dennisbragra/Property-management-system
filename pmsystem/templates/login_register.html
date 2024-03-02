@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+
+{% block content %}
+	
+	<div class="container-fluid" style="margin-top: 100px; margin-bottom: 100px;">
+		<div class="row justify-content-center">
+			{% if page == 'login' %}
+				<div class="card" style="width:300px">
+					<div class="card-title" style="text-align: center;"><h1> Sign In</h1></div>
+					<div class="card-body">
+						<form method="POST" action="">{%csrf_token%}
+							<table>
+								<tr>
+									<td><label>Username</label></td>
+									<td><input type="text" name="username" placeholder="Enter your username"></td>	
+								</tr>
+								<tr>
+									<td><label>Password</label></td>
+									<td><input type="password" name="Password" placeholder="Enter your password"></td>	
+								</tr>
+							</table>
+							<div style="text-align: center; padding-top: 30px;">
+								<input class="btn btn-primary" type="submit" value="Login" />	
+							</div>
+							<div style="text-align:center;">
+								Don't have an account
+								<a class="btn btn-primary" href="{% url 'registerpage' %}">Register</a>	
+							</div>	
+						</form>
+					</div>
+				</div>	
+			{% else %}	
+				<div class="card" style="width:500px">
+					<div class="card-title" style="text-align: center;"><h1>Register</h1></div>
+					<div class="card-body">
+						<form method="POST" action="">{% csrf_token %}
+							<table>
+								{{ form.as_p }}
+							</table>	
+							<div style="text-align: center; padding-bottom: 30px; padding-top: 30px;">
+								<input class="btn btn-primary" type="submit" value="Register" />	
+							</div>
+							<div style="text-align:center;">
+								Already have an account
+								<a class="btn btn-primary" href="{% url 'registerpage' %}">Sign In</a>	
+							</div>						
+						</form>
+					</div>
+				</div>
+			{% endif %}
+		</div>	
+	</div>
+
+{% endblock content %}

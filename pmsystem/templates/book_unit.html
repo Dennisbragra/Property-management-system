@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+	
+	<div class="container-fluid my-2">
+		<div class="card" style="width:350px;">
+			<div class="card-body">
+				<div class="card-title">Would you wish to book this unit</div>
+				<img class="img-fluid" src="{{ house.image.url }}">
+				<ul class="d-flex flex-column px-0">
+					<li>A {{ house.bedroom}} bedroomed {{ house.name }}</li>
+					<li>{{ house.description }}<br></li>
+       				<li>Ksh. {{ house.price}}</li>
+           			<li>Located at {{ house.place}}</li><br>
+				</ul>
+				{% if house.booked %}
+					<small>Booked</small>
+					<div class="btn btn-primary"><a href="{{ request.META.HTTP_REFERER}}">Go Back</a></div>
+				{% else %}
+					{% if request.user.is_authenticated %}		
+						<form method="Post" action="">{% csrf_token %}		
+							{{form}}<br>
+							<input type="submit" name="submit">
+							<div class="btn btn-primary"><a href="{{ request.META.HTTP_REFERER}}">Go Back</a></div>
+						</form>
+					{% else %}
+						<small>To book this unit you need to sign up</small>
+						<a href="">Register</a>
+						<div class="btn btn-primary"><a href="{{ request.META.HTTP_REFERER}}">Go Back</a></div>
+					{% endif %}			
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock content %}

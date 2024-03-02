@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+
+	<div class="container-fluid"><h1>{{ topic.name|title }}</h1></div>
+
+	<div class="d-md-flex">
+    	{% for house in houses %}
+    		{% if house.sold == False %}
+            	<ul>
+            		<a href="{% url 'bookunit' house.id %}">
+            			<li>A {{ house.bedroom}} bedroomed {{ house.name }}</li>
+                		<img class="img-fluid" src="{{ house.image.url }}" style="width:250px;">
+                	</a>	
+                    	<li>{{ house.description }}<br></li>
+              			<li>Ksh. {{ house.price}}</li>
+                   		<li>Located at {{ house.place}}</li>
+                   		<li>
+                   			<small>Posted {{ house.created|timesince }} ago</small>
+                   		</li>
+                   		<li>
+                   			{% if house.booked == True %}
+                   				<small>Booked</small>
+                   			{% endif %}	
+                   		</li>
+               	</ul>	
+           	{% endif %}            	
+        {% endfor %}
+    	
+	</div>
+
+{% endblock content %}
